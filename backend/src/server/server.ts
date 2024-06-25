@@ -15,5 +15,6 @@ export default class Server {
 
     start(callback: (() => void)){
         this.app.listen(this.port, callback)
+        console.log("Running in " + this.port)
     }
 }
