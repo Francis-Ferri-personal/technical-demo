@@ -1,11 +1,14 @@
 import {Router, Request, Response} from "express";
+import MySQL from '../databases/mysql'
+
 import userSchema from "../models/user"
 
 const router = Router();
 
-router.get('/test', (req: Request, res: Response) => {
+router.get('/users', (req: Request, res: Response) => {
     //  Make a call to the database
 
+    const query = `SELECT * FROM users`;
     res.json({
         ok: true,
         // items

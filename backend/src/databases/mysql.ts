@@ -44,4 +44,18 @@ export default class MySQL {
     public getConnection() {
         return this.connection;
     }
+
+
+    static executeQuery(query: string, callback: Function){
+        this.instance.connection.query(query, (err: Error, results: Object[]) => {
+            if(err){
+                console.error(`Error in query!`, err)
+                return callback(err);
+            } 
+            if (results.length === 0){
+                return callback("The requested item does not exist!");
+            }
+            callback(null, results);
+        });
+    }
 }

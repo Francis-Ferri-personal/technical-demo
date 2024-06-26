@@ -1,2 +1,4 @@
 node_modules
-containers
+containers/mysql/data
+containers/mongo/data
+.venv

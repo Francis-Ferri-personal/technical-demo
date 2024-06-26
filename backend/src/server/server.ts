@@ -7,7 +7,7 @@ export default class Server {
     private mysql_instance: MySQL;
 
     constructor(port: number){
-        this.port = port
+        this.port = port;
         this.app = express();
         this.mysql_instance = MySQL.instance;
     }
@@ -18,9 +18,9 @@ export default class Server {
 
     async start(callback: (() => void)){
         // Connect to MySQL
-        await this.mysql_instance.waitForConnection(5000)
+        await this.mysql_instance.waitForConnection(5000);
         console.log("MySQL connection online");
         
-        this.app.listen(this.port, callback)
+        this.app.listen(this.port, callback);
     }
 }
