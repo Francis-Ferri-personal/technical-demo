@@ -27,8 +27,9 @@ services:
     working_dir: /app 
     environment:
       - MYSQL_HOST=mysql
+      - MONGO_HOST=mongo
     env_file: .env
-    command: "./wait-for-it.sh mysql:3306 -- python fake-data-mysql.py"
+    command: "./fake-data.sh"
     depends_on:
       - mysql
       - mongo
