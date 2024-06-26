@@ -23,23 +23,25 @@ router.get('/users', (req: Request, res: Response) => {
     });
 });
 
+//  Get user by id
+router.get('/users/:id', (req: Request, res: Response) => {
+    // TODO: add validation to the email and to get just one 
+    const id = req.params.id;
+    
+    const query = `SELECT * FROM user where id = ${id}`;
 
-router.get('test/:id', (req: Request, res: Response) =>{
-    const id = req.params.id
-
-    if (!id){
-        res.status(400).json({
-            ok: false,
-            message: "No id included"
+    MySQL.executeQuery(query, (err: Error, users: Object []) => {
+        if(err){
+            return res.status(400).json({
+                ok: false,
+                error: err
+            });
+        }
+        res.json({
+            ok: true,
+            heroe: users[0]
         })
-    }
-
-    // Make a call to the database
-
-    res.json({
-        ok: true,
-        // items
-    })
+    });
 })
 
 export default router
