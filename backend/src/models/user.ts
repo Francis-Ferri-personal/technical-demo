@@ -7,6 +7,18 @@ const userSchema = new mongoose.Schema({
 
     email: {
         type: String
+    },
+
+    gender: {
+        type: String
+    },
+
+    married: {
+        type: Boolean
+    },
+
+    points: {
+        type: Number
     }
 
 })

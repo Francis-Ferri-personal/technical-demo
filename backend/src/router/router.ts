@@ -9,7 +9,7 @@ router.get('/test', (req: Request, res: Response) => {
     res.json({
         ok: true,
         // items
-        message: "The Request was successfull"
+        message: "The Request was successfull yes"
     })
 });
 
