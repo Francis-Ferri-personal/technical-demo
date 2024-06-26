@@ -5,15 +5,22 @@ import userSchema from "../models/user"
 
 const router = Router();
 
+// Get all users
 router.get('/users', (req: Request, res: Response) => {
+    const query = `SELECT * FROM user`;
     //  Make a call to the database
-
-    const query = `SELECT * FROM users`;
-    res.json({
-        ok: true,
-        // items
-        message: "The Request was successfull yes"
-    })
+    MySQL.executeQuery(query, (err: Error, users: Object[]) =>{
+        if (err){
+            res.status(400).json({
+                ok: false,
+                error: err
+            });
+        }
+        res.json({
+            ok: true,
+            users
+        });
+    });
 });
 
 
