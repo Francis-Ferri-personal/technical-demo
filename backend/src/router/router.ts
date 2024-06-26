@@ -5,20 +5,30 @@ import userSchema from "../models/user"
 
 const router = Router();
 
-// Get all users
+// Get users by email prefix
 router.get('/users', (req: Request, res: Response) => {
-    const query = `SELECT * FROM user`;
-    //  Make a call to the database
-    MySQL.executeQuery(query, (err: Error, users: Object[]) =>{
-        if (err){
-            res.status(400).json({
+
+    const emailPrefix = req.query.emailPrefix as string;
+
+    if (!emailPrefix) {
+        return res.status(400).json({
+            ok: false,
+            error: 'Email prefix is required',
+        });
+    }
+
+    const query = `SELECT * FROM user WHERE email LIKE  '${emailPrefix}%'`;
+
+    MySQL.executeQuery(query, (err: Error, users: Object[]) => {
+        if (err) {
+            return res.status(400).json({
                 ok: false,
-                error: err
+                error: err,
             });
         }
         res.json({
             ok: true,
-            users
+            users,
         });
     });
 });
@@ -43,5 +53,7 @@ router.get('/users/:id', (req: Request, res: Response) => {
         })
     });
 })
+
+
 
 export default router
