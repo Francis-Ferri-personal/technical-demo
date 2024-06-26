@@ -10,10 +10,14 @@ env_path = os.path.abspath(os.path.join(current_dir, '../../../.env'))
 
 load_dotenv(env_path)
 
+"""
+    MySQL data
+"""
+
 # Database connection configuration using environment variables
 db_config = {
-    'user': os.getenv('DB_USER', 'root'),
-    'password': os.getenv('DB_PASSWORD', '12345678'),
+    'user': os.getenv('MYSQL_USER', 'root'),
+    'password': os.getenv('MYSQL_ROOT_PASSWORD', '12345678'),
     'host': os.getenv('MYSQL_HOST', 'localhost'),
     'database': os.getenv('MYSQL_DATABASE', 'userdb')
 }
@@ -62,3 +66,8 @@ cursor.close()
 conn.close()
 
 print(f"The 'user' table created and {num_records} fake records have been inserted!")
+
+"""
+MongoDB data
+"""
+

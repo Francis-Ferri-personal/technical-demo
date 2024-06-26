@@ -4,10 +4,9 @@ services:
     container_name: mongo
     ports:
       - 27017:27017
-    volumes:
-      - ./containers/mongo/data:/data/db
+    # volumes:
+    #   - ./containers/mongo:/data/db
     image: mongo:8.0.0-rc9
-    restart: always
     env_file: .env
     networks:
       - network-test
@@ -15,15 +14,30 @@ services:
     container_name: mysql
     ports:
       - 3306:3306
-    volumes:
-      - ./containers/mysql/data:/var/lib/mysql
+    # volumes:
+    #   - ./containers/mysql:/var/lib/mysql
     image: mysql:5.7
-    restart: always
     env_file: .env
+    networks:
+      - network-test
+  data-faker:
+    container_name: data-faker
+    build:
+      context: ./containers/fake-data
+    working_dir: /app 
+    environment:
+      - MYSQL_HOST=mysql
+    env_file: .env
+    command: "./wait-for-it.sh mysql:3306 -- python create-fake-data.py"
+    depends_on:
+      - mysql
+      - mongo
     networks:
       - network-test
 networks:
   network-test:
+
+  
   # backend:
   #   container_name: backend
   #   ports:
