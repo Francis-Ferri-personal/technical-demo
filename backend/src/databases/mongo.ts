@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { mongo_ip, mongo_port } from '../config/config';
+import { mongo_ip, mongo_port, mongo_user, mongo_password, mongo_db} from '../config/config';
 
 class MongoDB {
     private static _instance: MongoDB;
@@ -17,7 +17,7 @@ class MongoDB {
     }
 
     private connect() {
-        mongoose.connect(`mongodb://${mongo_ip}:${mongo_port}/pet`)
+        mongoose.connect(`mongodb://${mongo_user}:${mongo_password}@${mongo_ip}:${mongo_port}/${mongo_db}?authSource=admin`)
             .then(() => this.connected = true)
             .catch((err) => console.error(err))
     }

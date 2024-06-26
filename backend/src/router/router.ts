@@ -1,7 +1,7 @@
 import {Router, Request, Response} from "express";
 import MySQL from '../databases/mysql'
+import Pet from "../models/pet"
 
-import Pet, {IPet} from "../models/pet"
 
 const router = Router();
 
@@ -78,21 +78,74 @@ router.get('/users/search', (req: Request, res: Response) => {
 //  MongoDB
 
 // Get all pets
-router.get('/pets', (req: Request, res: Response) => {
-    Pet.find({}, (err: Error, pets: IPet) => {
-        if (err) {
-            return res.status(400).json({
-                ok: false,
-                error: err,
-            });
-        }
+router.get('/pets', async (req: Request, res: Response) => {
+    try {
+        const pets = await Pet.find().exec();
         res.json({
             ok: true,
             pets,
         });
-    });
+    } catch (err) {
+        res.status(400).json({
+            ok: false,
+            error: err,
+        });
+    }
 });
 
 
+router.get('/pets/search/:owner', async (req: Request, res: Response) => {
+    // populate: usuario, categoria
+    const owner = req.params.owner;
+
+    if (!owner) {
+        return res.status(400).json({
+            ok: false,
+            error: 'Owner is required',
+        });
+    }
+
+    try {
+        const pets = await Pet.find({owner}).exec();
+        res.status(200).json({
+            ok: true,
+            pets
+        });
+    } catch (err) {
+        res.status(400).json({
+            ok: false,
+            error: err,
+        });
+    }
+});
+
+// Get users by email prefix
+router.get('/pets/search', async (req: Request, res: Response) => {
+
+    const namePrefix = req.query.namePrefix as string;
+
+    if (!namePrefix) {
+        return res.status(400).json({
+            ok: false,
+            error: 'Pet name prefix is required',
+        });
+    }
+
+    const regex = new RegExp(namePrefix, 'i');
+
+    try {
+        const pets = await Pet.find({name: regex}).exec();
+        res.status(200).json({
+            ok: true,
+            pets
+        });
+    } catch (err) {
+        res.status(400).json({
+            ok: false,
+            error: err,
+        });
+    }
+    
+});
 
 export default router
