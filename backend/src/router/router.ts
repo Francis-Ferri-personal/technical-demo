@@ -1,12 +1,53 @@
 import {Router, Request, Response} from "express";
 import MySQL from '../databases/mysql'
 
-import userSchema from "../models/user"
+import Pet, {IPet} from "../models/pet"
 
 const router = Router();
 
-// Get users by email prefix
+//  MySQL
+
+// Get all users
 router.get('/users', (req: Request, res: Response) => {
+    const query = `SELECT * FROM user`;
+    //  Make a call to the database
+    MySQL.executeQuery(query, (err: Error, users: Object[]) =>{
+        if (err){
+            res.status(400).json({
+                ok: false,
+                error: err
+            });
+        }
+        res.json({
+            ok: true,
+            users
+        });
+    });
+});
+
+//  Get user by id
+router.get('/users/search/:id', (req: Request, res: Response) => {
+    // TODO: add validation to the email and to get just one 
+    const id = req.params.id;
+    
+    const query = `SELECT * FROM user where id = ${id}`;
+
+    MySQL.executeQuery(query, (err: Error, users: Object []) => {
+        if(err){
+            return res.status(400).json({
+                ok: false,
+                error: err
+            });
+        }
+        res.json({
+            ok: true,
+            heroe: users[0]
+        })
+    });
+})
+
+// Get users by email prefix
+router.get('/users/search', (req: Request, res: Response) => {
 
     const emailPrefix = req.query.emailPrefix as string;
 
@@ -33,26 +74,24 @@ router.get('/users', (req: Request, res: Response) => {
     });
 });
 
-//  Get user by id
-router.get('/users/:id', (req: Request, res: Response) => {
-    // TODO: add validation to the email and to get just one 
-    const id = req.params.id;
-    
-    const query = `SELECT * FROM user where id = ${id}`;
 
-    MySQL.executeQuery(query, (err: Error, users: Object []) => {
-        if(err){
+//  MongoDB
+
+// Get all pets
+router.get('/pets', (req: Request, res: Response) => {
+    Pet.find({}, (err: Error, pets: IPet) => {
+        if (err) {
             return res.status(400).json({
                 ok: false,
-                error: err
+                error: err,
             });
         }
         res.json({
             ok: true,
-            heroe: users[0]
-        })
+            pets,
+        });
     });
-})
+});
 
 
 

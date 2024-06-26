@@ -6,13 +6,9 @@ import os
 current_dir = os.path.dirname(os.path.realpath(__file__))
 
 # Navigate three directories up from the current script directory
-env_path = os.path.abspath(os.path.join(current_dir, '../../../.env'))
+env_path = os.path.abspath(os.path.join(current_dir, '../../.env'))
 
 load_dotenv(env_path)
-
-"""
-    MySQL data
-"""
 
 # Database connection configuration using environment variables
 db_config = {
@@ -28,7 +24,7 @@ cursor = conn.cursor()
 
 # Create an instance of Faker and set a seed
 fake = Faker()
-Faker.seed(42)  # Change 42 to any number to set a different seed
+Faker.seed(42)
 
 #  Create the user table if it doesn't exist
 create_table_query = """
@@ -66,8 +62,3 @@ cursor.close()
 conn.close()
 
 print(f"The 'user' table created and {num_records} fake records have been inserted!")
-
-"""
-MongoDB data
-"""
-

@@ -28,7 +28,7 @@ services:
     environment:
       - MYSQL_HOST=mysql
     env_file: .env
-    command: "./wait-for-it.sh mysql:3306 -- python create-fake-data.py"
+    command: "./wait-for-it.sh mysql:3306 -- python fake-data-mysql.py"
     depends_on:
       - mysql
       - mongo
