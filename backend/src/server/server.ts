@@ -18,7 +18,7 @@ export default class Server {
 
     async start(callback: (() => void)){
         // Connect to MySQL
-        await this.mysql_instance.waitForConnection()
+        await this.mysql_instance.waitForConnection(5000)
         console.log("MySQL connection online");
         
         this.app.listen(this.port, callback)

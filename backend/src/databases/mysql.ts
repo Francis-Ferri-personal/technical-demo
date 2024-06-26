@@ -32,9 +32,12 @@ export default class MySQL {
         });
     }
 
-    public waitForConnection() {
-        if (!this.connected) {
-            setTimeout(() => this.waitForConnection(), 1000); // Retry after 1 second
+    public waitForConnection(timeout: number, startTime = Date.now()) {
+        if (!this.connected && Date.now() - startTime < timeout) {
+            setTimeout(() => this.waitForConnection(timeout, startTime), 1000); // Retry after 1 second
+            
+        } else if (!this.connected) {
+            console.error("Impossible to stablish connection with MySQL!")
         }
     }
 
