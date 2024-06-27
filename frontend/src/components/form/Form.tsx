@@ -2,6 +2,21 @@ import React, { useState, ChangeEvent, FormEvent } from 'react';
 import PropTypes from 'prop-types';
 import './Form.css';
 import { useForm } from '../../hooks/useForm';
+import { fetchRequest } from '../../helpers/fetch';
+
+interface Pet {
+    _id: string;
+    name: string;
+    owner: string;
+    breed: string;
+    sex: string;
+    height: number;
+    weight: number;
+}
+
+interface ApiResponse {
+    pets: Pet[];
+}
 
 function Form({ search_type }: FormProps) {
     
@@ -11,19 +26,27 @@ function Form({ search_type }: FormProps) {
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
 
-    const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         // disable button
         setIsButtonDisabled(true);
 
+        let body: ApiResponse;
+
         if (!searchOwner && !searchPet) {
             // get all pets
-            console.log('get all pets');
+            const resp = await fetchRequest("pets");
+			body = await resp.json();
         } else if (searchOwner && !searchPet) {
             // get pets by owner
-        } else if (!searchOwner && searchPet) {
+            const resp = await fetchRequest(`pets/search/${searchOwner}`);
+			body = await resp.json();
+        } else (!searchOwner && searchPet) {
             // get pets by name prefix
+            const resp = await fetchRequest(`pets/search?namePrefix=${searchPet}`);
+			body = await resp.json();
         }
+        const pets: Pet[] = body.pets;
         setIsButtonDisabled(false);
         
     };
