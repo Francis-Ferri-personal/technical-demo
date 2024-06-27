@@ -1,5 +1,5 @@
 // PORT
-const port: number = process.env.PORT ? parseInt(process.env.PORT) : 3000;
+const port: number = process.env.PORT ? parseInt(process.env.PORT) : 4000;
 
 // MongoDB
 const mongo_ip =  process.env.MONGO_IP ? process.env.MONGO_IP : 'localhost';
