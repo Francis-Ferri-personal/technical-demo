@@ -1,0 +1,48 @@
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #fff;
+    border-radius: 8px;
+
+}
+
+input {
+    color: gray;
+    font-size: 1.2rem;
+    width: 75%;
+    align-content: center;    
+}
+
+button {
+    background-color: #007bff;
+    color: #fff;
+    font-size: 1.2rem;
+    padding: 0.75rem 1.5rem;
+    margin: 1.5rem 1.5rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+button:active {
+    transform: scale(0.98);
+}
+
+h3{
+    display: flex;
+    background-color: darkseagreen;
+    justify-content: center;
+    width: 100%;
+}
+
+button[disabled] {
+    background-color: #ccc; /* Color de fondo cuando está deshabilitado */
+    color: #999; /* Color de texto cuando está deshabilitado */
+    cursor: not-allowed; /* Cambia el cursor a "no permitido" */
+}
