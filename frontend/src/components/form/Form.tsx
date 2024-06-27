@@ -3,22 +3,13 @@ import PropTypes from 'prop-types';
 import './Form.css';
 import { useForm } from '../../hooks/useForm';
 import { fetchRequest } from '../../helpers/fetch';
-
-interface Pet {
-    _id: string;
-    name: string;
-    owner: string;
-    breed: string;
-    sex: string;
-    height: number;
-    weight: number;
-}
+import { Pet } from '../../types/pets'
 
 interface ApiResponse {
     pets: Pet[];
 }
 
-function Form({ search_type }: FormProps) {
+function Form({ search_type, updatePets }: FormProps) {
     
     const [values, handleInputChange] = useForm( {searchOwner: "", searchPet: ""} );
     const { searchOwner,  searchPet} = values;
@@ -41,17 +32,17 @@ function Form({ search_type }: FormProps) {
             // get pets by owner
             const resp = await fetchRequest(`pets/search/${searchOwner}`);
 			body = await resp.json();
-        } else (!searchOwner && searchPet) {
+        } else {
             // get pets by name prefix
             const resp = await fetchRequest(`pets/search?namePrefix=${searchPet}`);
 			body = await resp.json();
         }
-        const pets: Pet[] = body.pets;
-        setIsButtonDisabled(false);
-        
+        const pets = body.pets;
+        updatePets(pets)
+        // enable button
+        setIsButtonDisabled(false); 
     };
 
-    
     return (
         <form onSubmit={handleSubmit}>
             <h3>Search for {search_type}</h3>
@@ -79,10 +70,7 @@ function Form({ search_type }: FormProps) {
 
 interface FormProps {
     search_type: string;
+    updatePets: Function;
 }
-
-// Form.propTypes = {
-//     search_type: PropTypes.func.isRequired
-// };
 
 export {Form};
