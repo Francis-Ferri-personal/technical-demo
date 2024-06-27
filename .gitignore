@@ -2,3 +2,4 @@ node_modules
 containers/mysql/data
 containers/mongo/data
 .venv
+backend/dist

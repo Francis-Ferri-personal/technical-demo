@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.ts",
     "dev": "nodemon src/index.ts",
+    "compile": "tsc",
     "test": "test"
   },
   "author": "Francis Ferri",
