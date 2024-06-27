@@ -7,10 +7,6 @@ function App() {
   
   const [pets, setpets] = useState([]);
 
-  const handleClick = () => {
-    console.log('Search button clicked');
-  };
-
   return (
     <div className="App">
       <header className="App-header">
