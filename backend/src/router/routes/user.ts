@@ -39,7 +39,7 @@ router.get('/search/:id', (req: Request, res: Response) => {
         }
         res.json({
             ok: true,
-            heroe: users[0]
+            user: users[0]
         })
     });
 })
@@ -58,7 +58,7 @@ router.get('/search', (req: Request, res: Response) => {
 
     const query = `SELECT * FROM user WHERE email LIKE  '${emailPrefix}%'`;
 
-    MySQL.executeQuery(query, (err: Error, users: Object[]) => {
+    MySQL.executeQuery(query, (err: string, users: Object[]) => {
         if (err) {
             return res.status(400).json({
                 ok: false,
