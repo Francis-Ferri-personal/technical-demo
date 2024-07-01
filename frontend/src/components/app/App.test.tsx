@@ -1,8 +1,7 @@
-import React from 'react';
-import { render, screen, waitFor, act } from '@testing-library/react';
+import {act} from 'react';
+import { render, screen, waitFor } from '@testing-library/react';
 import App from './App';
 import userEvent from '@testing-library/user-event';
-import { fetchRequest } from '../../helpers/fetch';
 
 global.fetch = jest.fn()
 const mockFetch = fetch as jest.MockedFunction<typeof fetch>;
