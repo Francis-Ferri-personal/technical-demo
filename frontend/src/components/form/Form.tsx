@@ -44,27 +44,32 @@ function Form({ search_type, updatePets }: FormProps) {
     };
 
     return (
-        <form onSubmit={handleSubmit}>
-            <h3>Search for {search_type}</h3>
-            <h4>Search by owner</h4>
-            <input 
-                type="text"
-                name="searchOwner"
-                value={searchOwner}
-                onChange={handleInputChange}
-                disabled={searchPet}
-                />
+        <>
+        
+            <form data-testid="form-component" onSubmit={handleSubmit}>
+                <h3>Search for {search_type}</h3>
+                <h4>Search by owner</h4>
+                <input 
+                    type="text"
+                    name="searchOwner"
+                    value={searchOwner}
+                    data-testid="searchOwner"
+                    onChange={handleInputChange}
+                    disabled={searchPet}
+                    />
 
-            <h4>Search by name prefix</h4>
-            <input 
-                type="text"
-                name="searchPet"
-                value={searchPet}
-                onChange={handleInputChange}
-                disabled={searchOwner}
-            />
-            <button type='submit' disabled={isButtonDisabled}>Search</button>
-        </form>
+                <h4>Search by name prefix</h4>
+                <input 
+                    type="text"
+                    name="searchPet"
+                    value={searchPet}
+                    data-testid="searchPet"
+                    onChange={handleInputChange}
+                    disabled={searchOwner}
+                />
+                <button data-testid="submit-button" type='submit' disabled={isButtonDisabled}>Search</button>
+            </form>
+        </>
     )
 }
 
